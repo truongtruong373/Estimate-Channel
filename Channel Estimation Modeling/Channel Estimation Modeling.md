@@ -1,0 +1,12 @@
+# 1. Giới thiệu
+Các kênh vô tuyến trong hệ thống thông tin di động thường là các kênh fading đa đường, thường gây ra hiện tượng nhiễu ISI. Để loại bỏ  nhiễu ISI khỏi tín hiệu, nhiều loại bộ cân bằng có thể được sử dụng. Các thuật toán phát hiện như MLSE hoặc MAP cung cấp hiệu suất máy thu tốt, nhưng vẫn yêu cầu tính toán không quá phức tạp. Do đó, các thuật toán này hiện đang khá phổ biến.
+
+Tuy nhiên, các bộ phát hiện này đòi hỏi thông tin về đáp ứng xung kênh (CIR), thông tin này có thể được cung cấp bởi một bộ ước lượng kênh riêng biệt. Thông thường, ước lượng kênh dựa trên chuỗi bit đã biết, các bit này là duy nhất cho một máy phát nhất định và được lặp lại trong mỗi khung truyền. Do đó, bộ ước lượng kênh có thể ước tính CIR cho từng khung riêng biệt bằng cách sử dụng các bit truyền đã biết và các mẫu nhận tương ứng.
+
+Dưới đây trước tiên cung cấp một số thông tin nền tảng về ước lượng kênh. Sau đó giới thiệu các kỹ thuật ước lượng kênh theo phương pháp bình phương tối thiểu (Least-Squares - LS). Một số nhận xét về mô phỏng hệ thống ước lượng kênh. Sau đó là phương pháp ước lượng kênh lặp lại (iterative).. Ý tưởng là sử dụng các ký hiệu được giải mã để huấn luyện bộ ước lượng kênh, từ đó cải thiện chất lượng ước lượng. 
+# 2. Nền tảng về ước lượng kênh
+Hình 1 minh họa bố cục mô phỏng chung cho một hệ thống di động dựa trên TDMA, trong đó sử dụng ước lượng kênh và phát hiện tín hiệu trong việc cân bằng tín hiệu. Nguồn tín hiệu số thường được bảo vệ bằng cách mã hóa kênh và xen kẽ (interleaved) chống lại hiện tượng fading, sau đó tín hiệu được điều chế và truyền qua kênh fading đa đường. Nhiễu cộng được thêm vào tín hiệu truyền đi và được thu ở bên nhận.
+
+Do kênh đa đường (multipath channel), tín hiệu nhận được bị nhiễu liên ký tự (ISI). Vì vậy, một bộ phát hiện tín hiệu (detector) (như MLSE hoặc MAP) cần biết các đặc điểm của đáp ứng xung kênh (CIR) để đảm bảo cân bằng thành công (loại bỏ ISI). Sau khi phát hiện, tín hiệu được giải xen kẽ (deinterleaved) và giải mã kênh để có được bản tin gốc.
+![[Pasted image 20241213232858.png]]
+Thông thường, CIR được ước tính dựa trên tín các bit huấn luyện đã biết, được truyền trong mỗi khung truyền như minh họa ở Hình 2 cho hệ thống GSM hiện tại. Bộ thu có thể sử dụng các bit huấn luyện đã biết và các mẫu nhận tương ứng để ước tính CIR, thường cho từng khung riêng biệt. Có một số cách tiếp cận khác nhau để ước lượng kênh, chẳng hạn như phương pháp Bình phương tối thiểu (LS) hoặc phương pháp Sai số Bình phương Trung bình Tuyến tính Tối thiểu (LMMSE).
