@@ -14,7 +14,8 @@ I. Channel Estimation Modeling
 6. MMSE là gì 
 
 II. Deep Learning Base EC
-0. MMSE là gì ? (quan trọng)
+
+0. MMSE, LS là gì ? (quan trọng)
 1. Vị trí pilot là gì?
 2. Tìm hiểu về image super-resolution và image restoration
 3. Tìm hiểu phương pháp điều chế ghép kênh phân chia theo tần số trực giao (OFDM)
